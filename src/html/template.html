@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		{% @prop page_title %}
+	</title>
+	<style type="text/css">
+		{% @part styles %}
+	</style>
+</head>
+<body>
+	{% @part navigation %}
+	<main>
+		{% @html page_content %}
+	</main>
+	<footer>
+		Fernando Garcia (c) {% @prop year %} All rights reserved.
+	</footer>
+</body>
+</html>
