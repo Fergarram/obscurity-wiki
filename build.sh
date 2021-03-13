@@ -1,2 +1,2 @@
 # Create executable
-gcc src/main.c -o tomas
+gcc src/*.c -o tomas
