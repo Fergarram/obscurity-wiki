@@ -5,8 +5,9 @@
 #include "pages.h"
 #include "ptrarray.h"
 
+PageCollectionArray menu;
 
-void printFiles( char* directory, PtrArray files )
+void createCollection( char* directory, PtrArray files )
 {
 	printf("\nDir: %s has %d files\n", directory, files.length );
 	bool hasIndex = false;
@@ -18,6 +19,11 @@ void printFiles( char* directory, PtrArray files )
 		}
 	}
 	printf( "Has index file? %s\n", hasIndex ? "Yes" : "No" );
+	
+	PageCollection menuItem;
+	menuItem.name = malloc( strlen( directory ) + 1 );
+	strcpy( menuItem.name, directory );
+	appendPageCollectionArray( &menu, menuItem );
 }
 
 //
@@ -27,10 +33,13 @@ void printFiles( char* directory, PtrArray files )
 int
 main( void )
 {
-	PageCollection *collections;
-	collections = allocPageCollections( 2 );
+	menu = newPageCollectionArray( 1 );
+	fileSearch( "./pages", ".md", &createCollection );
 
-	fileSearch( "./pages", ".md", &printFiles );
-
+	puts("");
+	for (int i = 0; i < menu.length; ++i)
+	{
+		printf("%s\n", menu.items[i].name);
+	}
 	return 0;
 }

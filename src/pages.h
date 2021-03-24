@@ -1,5 +1,4 @@
-#ifndef PAGES_H
-#define PAGES_H
+#pragma once
 
 #include <stdlib.h>
 
@@ -28,31 +27,41 @@ typedef struct PageCollection {
 	struct PageCollection *children;
 } PageCollection;
 
-
 /*
-** Page* allocPages( int length )
+** PageCollectionArray
 **
-** Returns a collection array.
+** Dynamic array of PageCollections
 */
-Page*
-allocPages( int length )
-{
-	return ( Page * ) malloc(
-		sizeof( Page ) * length
-	);
+typedef struct {
+  PageCollection *items;
+  size_t length;
+  size_t allocSize;
+} PageCollectionArray;
+
+PageCollectionArray newPageCollectionArray( size_t allocSize ) {
+  PageCollectionArray a;
+  a.items = malloc( sizeof( PageCollection ) * allocSize );
+  a.length = 0;
+  a.allocSize = allocSize;
+  return a;
 }
 
-/*
-** PageCollection* allocPageCollectiosn( int length )
-**
-** Returns a collection array.
-*/
-PageCollection*
-allocPageCollections( int length )
-{
-	return ( PageCollection * ) malloc(
-		sizeof( PageCollection ) * length
-	);
+void appendPageCollectionArray(
+	PageCollectionArray *a,
+	PageCollection item
+) {
+  if ( a->length == a->allocSize ) {
+    a->allocSize *= 2;
+    a->items = realloc(
+    	a->items,
+    	a->allocSize * sizeof( PageCollection )
+    );
+  }
+  a->items[a->length++] = item;
 }
 
-#endif
+void freePageCollectionArray( PageCollectionArray *a ) {
+  free( a->items );
+  a->items = NULL;
+  a->length = a->allocSize = 0;
+}

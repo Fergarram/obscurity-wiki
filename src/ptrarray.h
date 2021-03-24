@@ -1,5 +1,4 @@
-#ifndef PTR_ARRAY_H
-#define PTR_ARRAY_H
+#pragma once
 
 #include <stdlib.h>
 
@@ -9,7 +8,7 @@ typedef struct {
   size_t allocSize;
 } PtrArray;
 
-PtrArray createPtrArray( size_t allocSize ) {
+PtrArray newPtrArray( size_t allocSize ) {
   PtrArray a;
   a.items = malloc(allocSize * sizeof(void*));
   a.length = 0;
@@ -30,5 +29,3 @@ void freePtrArray( PtrArray *a ) {
   a->items = NULL;
   a->length = a->allocSize = 0;
 }
-
-#endif

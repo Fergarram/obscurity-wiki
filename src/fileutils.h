@@ -1,5 +1,4 @@
-#ifndef FILE_UTILS_H
-#define FILE_UTILS_H
+#pragma once
 
 #include <stdlib.h>
 #include <stdbool.h>
@@ -44,7 +43,7 @@ void fileSearch(
 		exit(1);
 	}
 
-	PtrArray dirFiles = createPtrArray( 1 );
+	PtrArray dirFiles = newPtrArray( 1 );
 
 	while(( entry = readdir( folder ) ))
 	{
@@ -106,5 +105,3 @@ printMDFile( char *filepath )
 
 	fclose( mdFile );
 }
-
-#endif
